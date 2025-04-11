@@ -1,0 +1,30 @@
+# Psuedopotentials to define species
+# Plane-wave kinetic energy cutoff for wavefunctions and charge density (Hartrees)
+elec-cutoff 40 160
+ion-species GBRV/nb_pbe.uspp
+
+# Geometry
+coords-type lattice
+lattice Body-Centered Cubic 8.109 # in bohrs
+coulomb-interaction Periodic
+
+ion Nb 0.00 0.00 0.00 0 # this 0 holds this fixed
+# ion Nb X Y Z 1 # the 1 allows this to move during ionic minimization
+ion Nb 0.5 0.5 0.5 0
+
+#ionic-minimize nInteractions 10 # optimize geometry with maximum iterations; ONLY for relaxed structures
+
+# Electronic
+electronic-scf
+kpoint-folding 12 12 12 # gamma-centered k-mesh; points in Brillouin zone to sample rather than every point in zone to calculate electronic structure
+# do 6 6 6 for a 2x2x2 supercell and 4 4 4 for a 3x3x3 supercell
+#elec-smearing Cold 0.01 # cold smearing for electron filling
+elec-smearing Fermi 0.01
+
+# Outputs
+dump-name Nb.$VAR
+# Output energy components and electron density at end
+dump End Ecomponents ElecDensity
+
+# Band Structure Calculation
+# define k-point path; where Gamma is the center of the Brillouin zone, X is the edge of the Brillouin zone [100], and M is the corner of the Brillouin zone [110]
